@@ -1,20 +1,17 @@
-From a502bba3cadab804104d14f7bc633d05a9ec5932 Mon Sep 17 00:00:00 2001
-From: Isuru Fernando <isuruf@gmail.com>
-Date: Mon, 13 Oct 2025 16:10:25 -0500
-Subject: [PATCH 10/10] Workaround nvcc bug in message_lite.h
+From b0ff8fb7a07603f22681a465a1143dc573f7a7dd Mon Sep 17 00:00:00 2001
+From: pb01ka <gaganpb08singh@gmail.com>
+Date: Thu, 21 May 2026 01:50:51 +0530
+Subject: [PATCH] Compatible windows changes
 
-See https://github.com/protocolbuffers/protobuf/issues/21542
-
-Patch by Samuel Benzaquen (sbenzaquen)
 ---
  src/google/protobuf/message_lite.h | 7 +++++++
  1 file changed, 7 insertions(+)
 
 diff --git a/src/google/protobuf/message_lite.h b/src/google/protobuf/message_lite.h
-index 25264ef5c..455c11eae 100644
+index c416114aa..3994762f0 100644
 --- a/src/google/protobuf/message_lite.h
 +++ b/src/google/protobuf/message_lite.h
-@@ -292,11 +292,18 @@ struct MessageTraitsImpl {
+@@ -273,6 +273,12 @@ struct MessageTraitsImpl {
  template <typename T>
  using MessageTraits = decltype(MessageTraitsImpl::value<T>);
  
@@ -26,8 +23,10 @@ index 25264ef5c..455c11eae 100644
 +#else
  struct EnumTraitsImpl {
    struct Undefined;
+   // We use an incomplete type to cause a compiler error if something tries to
+@@ -282,6 +288,7 @@ struct EnumTraitsImpl {
    template <typename T>
-   static Undefined value;
+   static std::enable_if_t<sizeof(T) != 0, Undefined> value;
  };
 +#endif
  template <typename T>

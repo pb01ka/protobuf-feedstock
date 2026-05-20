@@ -1,9 +1,8 @@
-From 9efbfa310a9d6337ee209a344f80b5b470cb758a Mon Sep 17 00:00:00 2001
-From: "H. Vetinari" <h.vetinari@gmx.com>
-Date: Mon, 3 Mar 2025 11:59:27 +1100
-Subject: [PATCH 09/10] unvendor abseil/zlib
+From f010d31a848791ab6ffbe2ad72fc9e1461c33805 Mon Sep 17 00:00:00 2001
+From: pb01ka <gaganpb08singh@gmail.com>
+Date: Thu, 21 May 2026 01:50:05 +0530
+Subject: [PATCH] Compatible windows changes
 
-depends on putting tensorflow infrastructure in place, see feedstock build scripts
 ---
  WORKSPACE               | 15 +++++++++
  protobuf_deps.bzl       | 20 -----------
@@ -14,12 +13,12 @@ depends on putting tensorflow infrastructure in place, see feedstock build scrip
  delete mode 100644 third_party/zlib.BUILD
 
 diff --git a/WORKSPACE b/WORKSPACE
-index 5a4b2f458..33728525e 100644
+index 9b1b34404..1e47af691 100644
 --- a/WORKSPACE
 +++ b/WORKSPACE
-@@ -10,6 +10,21 @@ local_repository(
- 
- load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+@@ -5,6 +5,21 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+ # Load common dependencies first to ensure we use the correct version
+ load("//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
  
 +load("//third_party:repo.bzl", "tf_http_archive", "tf_mirror_urls")
 +load("//third_party/systemlibs:syslibs_configure.bzl", "syslibs_configure")
@@ -36,14 +35,14 @@ index 5a4b2f458..33728525e 100644
 +    urls = tf_mirror_urls("https://zlib.net/fossils/zlib-1.3.1.tar.gz"),
 +)
 +
- # Load common dependencies first to ensure we use the correct version
- load("//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
+ protobuf_deps()
  
+ load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
 diff --git a/protobuf_deps.bzl b/protobuf_deps.bzl
-index d48146341..1f5b6e37e 100644
+index c590bc9eb..95ed505dc 100644
 --- a/protobuf_deps.bzl
 +++ b/protobuf_deps.bzl
-@@ -82,26 +82,6 @@ def protobuf_deps():
+@@ -71,26 +71,6 @@ def protobuf_deps():
              ],
          )
  
@@ -71,10 +70,10 @@ index d48146341..1f5b6e37e 100644
          _github_archive(
              name = "jsoncpp",
 diff --git a/python/BUILD.bazel b/python/BUILD.bazel
-index e1b74d3a9..07aefd4d2 100644
+index b5376ebdd..d7dabb1cc 100644
 --- a/python/BUILD.bazel
 +++ b/python/BUILD.bazel
-@@ -20,6 +20,13 @@ package(
+@@ -19,6 +19,13 @@ package(
      default_visibility = ["//python/dist:__pkg__"],
  )
  
@@ -86,8 +85,8 @@ index e1b74d3a9..07aefd4d2 100644
 +)
 +
  LIMITED_API_FLAG_SELECT = {
-     ":limited_api_3.9": ["-DPy_LIMITED_API=0x03090000"],
      ":limited_api_3.10": ["-DPy_LIMITED_API=0x030a0000"],
+     "//conditions:default": [],
 diff --git a/third_party/BUILD.bazel b/third_party/BUILD.bazel
 index f70d91de5..491a5c5c7 100644
 --- a/third_party/BUILD.bazel

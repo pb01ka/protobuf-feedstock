@@ -1,17 +1,17 @@
-From e8bd73a273b9288280b8bebd5d09c0e5ec53ff83 Mon Sep 17 00:00:00 2001
-From: Uwe Korn <uwelk@xhochy.com>
-Date: Mon, 23 Sep 2024 11:59:53 +0000
-Subject: [PATCH 08/10] Add osx-64 and linux-ppc64le as supported wheel tags
+From 3885275fd6d2ecd2a7b65ff77b3293484da91c40 Mon Sep 17 00:00:00 2001
+From: pb01ka <gaganpb08singh@gmail.com>
+Date: Thu, 21 May 2026 01:52:32 +0530
+Subject: [PATCH] Compatible windows changes
 
 ---
- python/dist/BUILD.bazel | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ python/dist/BUILD.bazel | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/python/dist/BUILD.bazel b/python/dist/BUILD.bazel
-index fef8a561f..9ececae4f 100644
+index 9eff63f09..ee672205c 100644
 --- a/python/dist/BUILD.bazel
 +++ b/python/dist/BUILD.bazel
-@@ -66,6 +66,25 @@ config_setting(
+@@ -69,6 +69,25 @@ config_setting(
      },
  )
  
@@ -36,8 +36,16 @@ index fef8a561f..9ececae4f 100644
 +
  config_setting(
      name = "linux_x86_64_release",
-     flag_values = {
-@@ -352,11 +371,14 @@ py_wheel(
+     constraint_values = [
+@@ -285,6 +304,7 @@ pkg_files(
+     srcs = [
+         "//:LICENSE",
+         "//python:message_srcs",
++        "//python:version_script.lds",
+         "//upb:source_files",
+         "//upb/base:source_files",
+         "//upb/hash:source_files",
+@@ -373,11 +393,14 @@ py_wheel(
      platform = select({
          ":linux_x86_64_local": "linux_x86_64",
          ":linux_x86_64_release": "manylinux2014_x86_64",
@@ -52,3 +60,11 @@ index fef8a561f..9ececae4f 100644
          ":osx_aarch64": "macosx_11_0_arm64",
          ":windows_x86_32": "win32",
          ":windows_x86_64": "win_amd64",
+@@ -398,7 +421,6 @@ py_wheel(
+         "src/",
+     ],
+     target_compatible_with = select({
+-        "@system_python//:none": ["@platforms//:incompatible"],
+         "//conditions:default": [],
+     }),
+     version = PROTOBUF_PYTHON_VERSION,
