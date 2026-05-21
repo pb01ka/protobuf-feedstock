@@ -1,23 +1,22 @@
-From 9efbfa310a9d6337ee209a344f80b5b470cb758a Mon Sep 17 00:00:00 2001
-From: "H. Vetinari" <h.vetinari@gmx.com>
-Date: Mon, 3 Mar 2025 11:59:27 +1100
-Subject: [PATCH 09/10] unvendor abseil/zlib
+From c21572e5de972120b8b8fb0079fb14068eee8bb0 Mon Sep 17 00:00:00 2001
+From: pb01ka <gaganpb08singh@gmail.com>
+Date: Thu, 21 May 2026 21:11:09 +0530
+Subject: [PATCH] unvendor abseil/zlib
 
-depends on putting tensorflow infrastructure in place, see feedstock build scripts
 ---
  WORKSPACE               | 15 +++++++++
  protobuf_deps.bzl       | 20 -----------
- python/BUILD.bazel      |  7 ++++
+ python/BUILD.bazel      |  8 +++++
  third_party/BUILD.bazel |  1 -
  third_party/zlib.BUILD  | 74 -----------------------------------------
- 5 files changed, 22 insertions(+), 95 deletions(-)
+ 5 files changed, 23 insertions(+), 95 deletions(-)
  delete mode 100644 third_party/zlib.BUILD
 
 diff --git a/WORKSPACE b/WORKSPACE
-index 5a4b2f458..33728525e 100644
+index 9b1b34404..b83c60ee2 100644
 --- a/WORKSPACE
 +++ b/WORKSPACE
-@@ -10,6 +10,21 @@ local_repository(
+@@ -2,6 +2,21 @@ workspace(name = "com_google_protobuf")
  
  load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
  
@@ -40,10 +39,10 @@ index 5a4b2f458..33728525e 100644
  load("//:protobuf_deps.bzl", "PROTOBUF_MAVEN_ARTIFACTS", "protobuf_deps")
  
 diff --git a/protobuf_deps.bzl b/protobuf_deps.bzl
-index d48146341..1f5b6e37e 100644
+index 92320d30f..df328b2b5 100644
 --- a/protobuf_deps.bzl
 +++ b/protobuf_deps.bzl
-@@ -82,26 +82,6 @@ def protobuf_deps():
+@@ -71,26 +71,6 @@ def protobuf_deps():
              ],
          )
  
@@ -71,10 +70,10 @@ index d48146341..1f5b6e37e 100644
          _github_archive(
              name = "jsoncpp",
 diff --git a/python/BUILD.bazel b/python/BUILD.bazel
-index e1b74d3a9..07aefd4d2 100644
+index 9c3086467..081585a77 100644
 --- a/python/BUILD.bazel
 +++ b/python/BUILD.bazel
-@@ -20,6 +20,13 @@ package(
+@@ -19,6 +19,14 @@ package(
      default_visibility = ["//python/dist:__pkg__"],
  )
  
@@ -85,9 +84,10 @@ index e1b74d3a9..07aefd4d2 100644
 +    visibility = ["//visibility:public"],
 +)
 +
++
  LIMITED_API_FLAG_SELECT = {
-     ":limited_api_3.9": ["-DPy_LIMITED_API=0x03090000"],
      ":limited_api_3.10": ["-DPy_LIMITED_API=0x030a0000"],
+     "//conditions:default": [],
 diff --git a/third_party/BUILD.bazel b/third_party/BUILD.bazel
 index f70d91de5..491a5c5c7 100644
 --- a/third_party/BUILD.bazel
