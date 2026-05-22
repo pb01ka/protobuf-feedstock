@@ -1,10 +1,10 @@
 # keep this without major version to let the bot pick it up
-{% set version = "33.5" %}
+{% set version = "34.2" %}
 # protobuf doesn't add the major version in the tag, it's defined per language in
 # https://github.com/protocolbuffers/protobuf/blob/main/version.json
-{% set major = "6" %}
+{% set major = "7" %}
 # libprotobuf can have a different major version than protobuf
-{% set lib_major = "6" %}
+{% set lib_major = "7" %}
 
 package:
   name: protobuf
@@ -12,7 +12,7 @@ package:
 
 source:
   - url: https://github.com/protocolbuffers/protobuf/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 440848dffa209beb8a04e41cc352762e44f8e91342b2a43aab6af9b30713c2f6
+    sha256: c0156673c0977bff3bf7c605dad47b216b05c2e1bf143ca0c72b0e4f382d1f59
     patches:
       # backport https://github.com/protocolbuffers/protobuf/pull/17207 to avoid upb leakage
       - patches/0001-Make-our-Python-source-wheel-use-the-version-script-.patch
@@ -28,20 +28,20 @@ source:
       - patches/0010-Workaround-nvcc-bug-in-message_lite.h.patch
 
   {% set bz_url = "https://github.com/bazelbuild/bazel/releases/download" %}
-  {% set bz_ver = "7.2.1" %}
+  {% set bz_ver = "8.0.1" %}
   - fn: bazel-standalone    # [unix]
   - fn: bazel.exe           # [win]
     url: {{ bz_url }}/{{ bz_ver }}/bazel_nojdk-{{ bz_ver }}-linux-x86_64        # [build_platform == "linux-64"]
-    sha256: 1c7a167ad2c45374afb19f60093465f58f9209a5142d53d63bc4aadb567323fa    # [build_platform == "linux-64"]
+    sha256: 28b7a35bc5dc550df10fe90ff4418246b3839876705fb4aaddeb5dad504d5c72    # [build_platform == "linux-64"]
     url: {{ bz_url }}/{{ bz_ver }}/bazel_nojdk-{{ bz_ver }}-darwin-x86_64       # [build_platform == "osx-64"]
-    sha256: ba0a10ecbdaa70bf348bfdbad2fbcf0ba926a5ee07b613f6656046a1d3f60e07    # [build_platform == "osx-64"]
+    sha256: f6040daf166fbc28ddd28b6626c61b33d600ea7ff574be3d7e7423ad261f4c56    # [build_platform == "osx-64"]
     url: {{ bz_url }}/{{ bz_ver }}/bazel_nojdk-{{ bz_ver }}-darwin-arm64        # [build_platform == "osx-arm64"]
-    sha256: ef15ff2c9ca3cbf2b09dcc88ea6d7d89575cfd6904e560d7691831a1d7daaf82    # [build_platform == "osx-arm64"]
+    sha256: ec828c290f3e4308b7391cd980a49f7dd21dd59ab5de129cb21b6158a613b420    # [build_platform == "osx-arm64"]
     url: {{ bz_url }}/{{ bz_ver }}/bazel-{{ bz_ver }}-windows-x86_64.exe        # [build_platform == "win-64"]
-    sha256: 4926bd3bf580b8b3323e0d09bde5dc6120fdd262d99f753eb61fedfb9a2cfc49    # [build_platform == "win-64"]
+    sha256: d3cc933e6d411136eb0fa11702ddc24b81b928265a9452b5b426f2ef4636ae25    # [build_platform == "win-64"]
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
