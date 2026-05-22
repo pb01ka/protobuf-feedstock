@@ -1,0 +1,22 @@
+From e0a21b3471024635e36e206c56117be29b849d87 Mon Sep 17 00:00:00 2001
+From: pb01ka <gaganpb08singh@gmail.com>
+Date: Sat, 23 May 2026 02:35:26 +0530
+Subject: [PATCH 9/9] Remove 3.14 from supported python versions to avoid
+ duplication error
+
+---
+ MODULE.bazel | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/MODULE.bazel b/MODULE.bazel
+index 89e9bd51b..68f43154d 100644
+--- a/MODULE.bazel
++++ b/MODULE.bazel
+@@ -128,7 +128,6 @@ SUPPORTED_PYTHON_VERSIONS = [
+     "3.11",
+     "3.12",
+     "3.13",
+-    "3.14",
+ ]
+ 
+ # TODO: Replace system_python with hermetic_python.
