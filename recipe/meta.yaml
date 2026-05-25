@@ -11,20 +11,8 @@ package:
   version: {{ major ~ "." ~ version }}
 
 source:
-  - url: https://github.com/protocolbuffers/protobuf/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: c0156673c0977bff3bf7c605dad47b216b05c2e1bf143ca0c72b0e4f382d1f59
-    patches:
-      # backport https://github.com/protocolbuffers/protobuf/pull/17207 to avoid upb leakage
-      - patches/0001-Make-our-Python-source-wheel-use-the-version-script-.patch
-      - patches/0002-don-t-link-statically-on-windows.patch
-      - patches/0003-enable-windows-as-a-target-for-python-bindings.patch
-      - patches/0004-Compatible-windows-changes.patch
-      - patches/0005-Hacky-windows-workarounds.patch                                # [win]
-      - patches/0006-Add-osx-64-and-linux-ppc64le-as-supported-wheel-tags.patch
-      # TF_SYSTEM_LIBS (or rather: abseil_dll setup) not compatible with windows
-      - patches/0007-unvendor-abseil-zlib.patch                                     # [not win]
-      - patches/0008-Workaround-nvcc-bug-in-message_lite.h.patch
-      - patches/0009-Remove-3.14-from-supported-python-versions-to-avoid-.patch
+  - git_url: https://github.com/pb01ka/protobuf
+    git_rev: v34.2b
 
   {% set bz_url = "https://github.com/bazelbuild/bazel/releases/download" %}
   {% set bz_ver = "8.0.1" %}
