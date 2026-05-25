@@ -12,7 +12,7 @@ package:
 
 source:
   - git_url: https://github.com/pb01ka/protobuf
-    git_rev: v34.2b
+    git_rev: v34.2b1
 
   {% set bz_url = "https://github.com/bazelbuild/bazel/releases/download" %}
   {% set bz_ver = "8.0.1" %}
